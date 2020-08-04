@@ -1,6 +1,9 @@
-package Process
+package process
 
-import "fmt"
+import (
+	"fmt"
+	"syscall"
+)
 
 /*
 NTSYSAPI
@@ -18,6 +21,11 @@ NtSetInformationProcess(
 
 func Protect() {
 
+	_, err := syscall.GetCurrentProcess()
+
+	if err != nil {
+		return
+	}
 	fmt.Printf("testing")
 
 }
