@@ -1,7 +1,6 @@
 package process
 
 import (
-	"fmt"
 	"syscall"
 )
 
@@ -19,13 +18,23 @@ NtSetInformationProcess(
 
 */
 
+// NtSetInformationProcess is Unexported
+var (
+	ntdll                   = syscall.MustLoadDLL("ntdll.dll")
+	ntSetInformationProcess = ntdll.MustFindProc("NtSetInformationProcess")
+)
+
+// Protect gets the current running process and initiates protection.
 func Protect() {
 
-	_, err := syscall.GetCurrentProcess()
+	process, err := syscall.GetCurrentProcess()
 
 	if err != nil {
 		return
 	}
-	fmt.Printf("testing")
+
+	ntSetInformationProcess.Call(uintptr(process), 29, 1, 4)
+
+	//fmt.Printf("testing")
 
 }
