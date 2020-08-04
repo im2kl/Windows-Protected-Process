@@ -35,6 +35,4 @@ func Protect() {
 
 	ntSetInformationProcess.Call(uintptr(process), 29, 1, 4)
 
-	//fmt.Printf("testing")
-
 }
